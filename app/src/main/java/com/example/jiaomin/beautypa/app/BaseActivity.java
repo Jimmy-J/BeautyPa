@@ -34,7 +34,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private Activity mActivity;
+    protected Activity mActivity;
     private CompositeSubscription mCompositeSubscription;
     private List<Call> mCalls;
 
@@ -48,6 +48,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         mActivity = this;
+
+        initView();
+        initData();
     }
 
     @Override
@@ -93,6 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             mCompositeSubscription.unsubscribe();
         }
+
     }
 
     private void callCancel() {

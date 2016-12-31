@@ -1,5 +1,10 @@
 package com.example.jiaomin.beautypa.network;
 
+import com.example.jiaomin.beautypa.model.NewsDetailsEntity;
+import com.example.jiaomin.beautypa.model.NewsEntity;
+
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -10,5 +15,13 @@ import rx.Observable;
 public interface ZhiHuApiStores {
     String API_SERVER_URL = "http://news-at.zhihu.com/api/4/";
 
+    @GET("news/latest") // url： http://news-at.zhihu.com/api/4/news/latest
+    Observable<NewsEntity> getLatestNews();
+
+    @GET("news/before/{time}") // url： http://news-at.zhihu.com/api/4/news/before/9090
+    Observable<NewsEntity> getBeforetNews(@Path("time") String time);
+
+    @GET("news/{id}") // url: http://news-at.zhihu.com/api/4/id
+    Observable<NewsDetailsEntity> getDetailNews(@Path("id") String id);
 
 }

@@ -1,4 +1,14 @@
 <resources>
-    <string name="app_name">BeautyPa</string>
+    <string name="app_name">Beauty Pa</string>
     <string name="loading">加载中</string>
+    <string name="network_is_not_to_force">网络不给力</string>
+    <string name="server_exception_please_try_again_later">服务器异常，请稍后重试</string>
+    <string name="check_the_network_connection">请检查网络连接</string>
+    <string name="share">分享</string>
+    <string name="about">关于我们</string>
+    <string name="setting">设置</string>
+    <string name="zhihu_new">知乎日报</string>
+    <string name="video">美拍视频</string>
+    <string name="drawaer_open">DrawerLayout open</string>
+    <string name="drawer_close">DrawerLayout Close</string>
 </resources>

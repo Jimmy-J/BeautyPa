@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="D:\AS_Demo\BeautyPa\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9b0e540d926be65563fe91bf045bb68fcf515d41">
+        <dex dex="D:\AS_Demo\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ebaba66d438942de4dcb304a448c00d12fb28a54\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\AS_Demo\BeautyPa\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b43fc3c2086492e219a89bf7d9862d8e651c3824">
+        <dex dex="D:\AS_Demo\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_d84fca61c9fdc66a53618b5aa85a5581703cd6ac\classes.dex" />
+    </item>
+
+</items>
