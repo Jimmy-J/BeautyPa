@@ -55,24 +55,23 @@ public class AppClient {
     }
 
     public static OkHttpClient getOkHttpClient() {
-        if (okHttpClient == null) {
+        if (okHttpClient == null){
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             if (BuildConfig.DEBUG) {
                 // Log信息拦截器
-                HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                // 设置Debug Log 模式
-                builder.addInterceptor(httpLoggingInterceptor);
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                //设置 Debug Log 模式
+                builder.addInterceptor(loggingInterceptor);
             }
-
+            //cache url
             File httpCacheDirectory = new File(MyApplication.getInstance().getExternalCacheDir(), "responses");
-            int cacheSize = 10 * 1024 * 1024;
+            int cacheSize = 10 * 1024 * 1024; // 10 MiB
             Cache cache = new Cache(httpCacheDirectory, cacheSize);
             builder.cache(cache);
             builder.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
             okHttpClient = builder.build();
         }
-
         return okHttpClient;
     }
 
@@ -89,29 +88,25 @@ public class AppClient {
 
             Request request = chain.request();
             if (!MyApplication.isNetwokrkAvailable(MyApplication.getInstance())) {
-                request.newBuilder()
+                request = request.newBuilder()
                         .cacheControl(cacheControl)
                         .build();
-//                没有网络
-            }
 
+            }
             Response originalResponse = chain.proceed(request);
-            Response response;
             if (MyApplication.isNetwokrkAvailable(MyApplication.getInstance())) {
-                int maxAge = 0;
-                response = originalResponse.newBuilder()
-                        .removeHeader("Pragme")
-                        .header("Cache-Control", "public,max-age=" + maxAge)
+                int maxAge = 0; // read from cache
+                return originalResponse.newBuilder()
+                        .removeHeader("Pragma")
+                        .header("Cache-Control", "public ,max-age=" + maxAge)
                         .build();
             } else {
-                int maxStale = 60 * 60 * 24 * 28;
-                response = originalResponse.newBuilder()
+                int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
+                return originalResponse.newBuilder()
                         .removeHeader("Pragma")
-                        .header("Cache-Control", "public,only-if-xcached,max-stale=" + maxStale)
+                        .header("Cache-Control", "public, only-if-xcached, max-stale=" + maxStale)
                         .build();
             }
-
-            return response;
         }
     };
 }

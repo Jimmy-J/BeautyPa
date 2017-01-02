@@ -12,11 +12,13 @@ import android.view.View;
 public abstract class BaseMvpViewPagerFragment<P extends BasePresenter> extends BaseViewPagerFragment {
     protected P mvpPresenter;
 
+
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mvpPresenter = createPresenter();
     }
+
 
 
     protected abstract P createPresenter();

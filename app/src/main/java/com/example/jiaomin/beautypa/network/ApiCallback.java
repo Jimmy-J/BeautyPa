@@ -11,7 +11,8 @@ import rx.Subscriber;
 
 /**
  * Created by MrJiaoMin@outlook.com on 2016/12/6.
- * 类描述：
+ * 类描述：对于 Subscriber的多一层封装 处理失败的网络请求事件
+ * 这样的封装也方便日后扩展，因为Subscriber的源码我们不能修改，但是我们可以修改 ApiCallback的源码来扩展
  */
 
 public abstract class ApiCallback<M> extends Subscriber<M> {

@@ -11,4 +11,5 @@
     <string name="video">美拍视频</string>
     <string name="drawaer_open">DrawerLayout open</string>
     <string name="drawer_close">DrawerLayout Close</string>
+    <string name="pull_up_to_load_more">上拉加载更多</string>
 </resources>

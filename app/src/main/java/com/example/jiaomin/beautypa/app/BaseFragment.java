@@ -2,6 +2,7 @@ package com.example.jiaomin.beautypa.app;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,14 +24,19 @@ import rx.subscriptions.CompositeSubscription;
 
 public class BaseFragment extends Fragment {
 
-    private Activity mActivity;
+    protected Activity mActivity;
     private CompositeSubscription mCompositeSubscription;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = getActivity();
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mActivity = getActivity();
     }
 
     public Toolbar initToolBar(View view, String title) {

@@ -22,16 +22,17 @@ import com.example.jiaomin.beautypa.utils.statusbarutils.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.Bind;
+
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    @BindView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.navigation_view)
+    @Bind(R.id.navigation_view)
     NavigationView navigationView;
-    @BindView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
 

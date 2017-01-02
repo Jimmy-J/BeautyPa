@@ -18,7 +18,11 @@ public interface VideoApiStores {
 
     String API_SERVER_URL = "http://newapi.meipai.com/output/";
 
-
+    /**
+     * 获取视频列表
+     * @param map
+     * @return
+     */
     @GET("channels_topics_timeline.json")
     Observable<List<VideoEntity>> getVideoList(@QueryMap HashMap<String, Object> map);
 
