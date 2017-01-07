@@ -14,5 +14,5 @@ public class StaticData {
     public static final String MAX_ID = "max_id";
 
 
-
+    public static final String URL = "url";
 }

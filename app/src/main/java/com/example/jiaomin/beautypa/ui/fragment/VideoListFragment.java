@@ -39,13 +39,15 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     private int index; // 当前Fragment的index
-    private String[] ids = {"1", "13", "64", "16", "31", "19", "62", "63", "3", "59", "27", "5", "18", "6", "193"};
+    private String[] ids = {"1", "13", "16", "31", "19", "62",
+            "63", "59", "27", "18", "6", "450", "460", "423"};
     private boolean isLoad; // 是否已经加载过数据了，用于实现数据只加载一次
-    private int page; // 当前的页数
+    private int page = 1; // 当前的页数
     private int count = 10; // 每一页加载的数据
 
     private VideoListAdapter mAdapter;
     private ArrayList<VideoEntity> mDatas;
+    private LinearLayoutManager mLinearLayoutManager;
 
     /**
      * 当需要给Fragment传递参数时一般推荐使用这种写法
@@ -101,7 +103,8 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
     }
 
     private void initView() {
-        ryView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mLinearLayoutManager = new LinearLayoutManager(mActivity);
+        ryView.setLayoutManager(mLinearLayoutManager);
 
         // 设置下拉出现小圆圈是否是缩放出现，出现的位置，最大的下拉位置
         swipeRefreshLayout.setProgressViewOffset(true, 50, 200);
@@ -119,6 +122,46 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
             @Override
             public void onRefresh() {
                 // 下拉刷新回调
+                page = 1;
+                getVideoList(null);
+
+            }
+        });
+
+
+        ryView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // recyclerView 滑动状态判断
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 当ReccylerView 停止滑动时 、 获得最后一个可见Item的 position
+                    int lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+
+                    final int size = mDatas.size();
+                    //判断是否是滑动到了最下面
+                    if (lastVisibleItemPosition == size - 1) {
+                        // 更新加载更多的状态
+                        // 加载太快了看不出效果，这里用一个手动 runable 延时 1 秒再去加载数据
+                        mAdapter.updateLoadMoreStatus(VideoListAdapter.STATUS_START_LOAD_MORE);
+                        ryView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getVideoList(String.valueOf(mDatas.get(size - 1).getId()));
+                            }
+                        }, 1000);
+
+                        // 我们在项目中应该是像下面这样写，不应该手动去延时
+//                        mAdapter.updateLoadMoreStatus(VideoListAdapter.STATUS_START_LOAD_MORE);
+//                        getVideoList(String.valueOf(mDatas.get(size - 1).getId()));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
 
@@ -126,10 +169,24 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
+        // 实现Fragment 数据懒加载 、 在Fragment 可见并且还没有加载过数据时去加载数据
         if (isVisible && !isLoad) {
-            LogUtil.e("onFragmentVisibleChange ----------- ");
-            getVideoList(null);
+            if (swipeRefreshLayout != null) {
+                // 显示出下来刷新， 但是不会回调 OnRefresListener ，需要手动调用 getVideoList
+                if (!swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                swipeRefreshLayout.setRefreshing(true);
+                getVideoList(null);
+            }
         }
+
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
     }
 
@@ -155,7 +212,9 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
             parame.put(StaticData.MAX_ID, maxId);
         }
         // 加载数据
-        mvpPresenter.getVideoList(parame);
+        if (mvpPresenter != null) {
+            mvpPresenter.getVideoList(parame);
+        }
     }
 
     @Override
@@ -165,42 +224,44 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
 
 
     @Override
-    public void getVideoListSuccess(ArrayList<VideoEntity> mDatas) {
+    public void getVideoListSuccess(ArrayList<VideoEntity> datas) {
         // 旧的数据源的长度
         int oldDatasSize = -1;
         if (this.mDatas == null) {
             // 首次获取数据
-            this.mDatas = mDatas;
-        } else if (page == 0) {
+            this.mDatas = datas;
+        } else if (page == 1) {
             //下拉刷新，先清除数据
             mDatas.clear();
         } else {
             // 是上拉加载更多 ， 记录上一次数据源的长度
             oldDatasSize = mDatas.size();
         }
-        mDatas.addAll(mDatas);
+        mDatas.addAll(datas);
 
         if (mAdapter == null) {
             // 首次获取数据
             mAdapter = new VideoListAdapter(mActivity, mDatas);
             ryView.setAdapter(mAdapter);
+            // 数据已经加载成功 ， 改变标识
+            isLoad = true;
+            page++; // 页码加一
         } else if (oldDatasSize > 0) {
             // 上拉加载、告诉Adapter 需要插入数据 ， 插入数据的position位置 、 插入的数量
-            mAdapter.notifyItemRangeInserted(oldDatasSize - 1, mDatas.size() - oldDatasSize);
+            mAdapter.notifyItemRangeInserted(oldDatasSize + 1, mDatas.size() - oldDatasSize);
+            mAdapter.updateLoadMoreStatus(VideoListAdapter.STATUS_STOP_LOAD_MORE);
         } else {
             // 下拉刷新
-            swipeRefreshLayout.setRefreshing(false);
             mAdapter.notifyDataSetChanged();
         }
+        swipeRefreshLayout.setRefreshing(false);
 
     }
 
     @Override
     public void getVideoListFail(String msg) {
         toastShow(msg);
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

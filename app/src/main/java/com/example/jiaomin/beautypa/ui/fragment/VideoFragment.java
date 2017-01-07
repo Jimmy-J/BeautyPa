@@ -32,7 +32,9 @@ public class VideoFragment extends BaseFragment {
     private View rootView;
     private ArrayList<Fragment> mFragments;
     String[] mTitles = new String[]{
-            "热门", "搞笑", "逗比", "明星名人", "男神", "女神", "音乐", "舞蹈", "旅行", "美食", "美妆时尚", "涨姿势", "宝宝", "萌宠乐园", "二次元"
+            "热门", "搞笑", "明星名人", "男神", "女神",
+            "音乐", "舞蹈", "旅行", "美食", "美妆", "宝宝",
+            "萌宠", "二次元","手工","穿秀","吃秀"
     };
 
     @Nullable

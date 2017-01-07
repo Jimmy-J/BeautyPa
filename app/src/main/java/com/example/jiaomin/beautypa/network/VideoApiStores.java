@@ -15,11 +15,12 @@ import rx.Observable;
  */
 
 public interface VideoApiStores {
-
+    // http://open.meipai.com/resource/api 美拍Api 地址
     String API_SERVER_URL = "http://newapi.meipai.com/output/";
 
     /**
      * 获取视频列表
+     *
      * @param map
      * @return
      */

@@ -53,4 +53,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.1.0'
     // recyclerView 的Item动画
     compile 'jp.wasabeef:recyclerview-animators:2.2.5'
+    // 圆形头像  https://github.com/lopspower/CircularImageView
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+
 }

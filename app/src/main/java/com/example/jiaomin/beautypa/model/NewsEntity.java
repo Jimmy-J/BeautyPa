@@ -1,5 +1,7 @@
 package com.example.jiaomin.beautypa.model;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class NewsEntity {
      * ga_prefix : 102711
      * title : 「小张，给你一周，写好这个项目的调查报告交给我」
      */
-    private List<StoriesEntity> stories;
+    private ArrayList<StoriesEntity> stories;
     /**
      * image : http://pic4.zhimg.com/075530196633feabbd49e58f129f9def.jpg
      * type : 0
@@ -30,7 +32,7 @@ public class NewsEntity {
      * title : 年收入12 万明明很高，为什么提高税率还叫苦不迭？
      */
 
-    private List<StoriesEntity> top_stories;
+    private ArrayList<StoriesEntity> top_stories;
 
 
     public String getDate() {
@@ -38,11 +40,11 @@ public class NewsEntity {
     }
 
 
-    public List<StoriesEntity> getStories() {
+    public ArrayList<StoriesEntity> getStories() {
         return stories;
     }
 
-    public List<StoriesEntity> getTop_stories() {
+    public ArrayList<StoriesEntity> getTop_stories() {
         return top_stories;
     }
 }

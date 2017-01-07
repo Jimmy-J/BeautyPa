@@ -11,7 +11,11 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|enterAlways"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/white" />
+        />
+
+    <!-- theme 给Toolbar 设置主题（包括返回按钮的颜色，以及文字颜色）,popupTheme （弹出的菜单颜色）  -->
 
 </android.support.design.widget.AppBarLayout>

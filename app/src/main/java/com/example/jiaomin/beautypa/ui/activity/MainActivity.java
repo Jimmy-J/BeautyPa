@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.jiaomin.beautypa.R;
 import com.example.jiaomin.beautypa.app.BaseActivity;
@@ -39,7 +38,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Fragment fragment;
 
     private List<Fragment> fragments;
-
+    private Fragment oldFragment; // 上一个显示的 Fragment
 
     @Override
     public int getContentLayoutId() {
@@ -52,7 +51,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.drawaer_open, R.string.drawer_close);
         toggle.getDrawerArrowDrawable().setColor(Color.WHITE);
-        StatusBarUtil.setColorForDrawerLayout(this,drawerLayout,ContextCompat.getColor(mActivity,R.color.colorPrimary),23);
+        StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, ContextCompat.getColor(mActivity, R.color.colorPrimary), 23);
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -60,49 +59,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (fragments.size() == 2){
-                    fragment = fragments.get(1);
-                }else {
-                    fragment = new NewsFragment();
-                    fragments.add(fragment);
-                }
-                toolbar.setTitle(R.string.zhihu_new);
-                toolbar.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.redColorPrimary));
-                StatusBarUtil.setColorForDrawerLayout(mActivity,drawerLayout, ContextCompat.getColor(mActivity,R.color.redColorPrimary),23);
-
-//                Window windowOne = getWindow();
-//                windowOne.setStatusBarColor(ContextCompat.getColor(mActivity,R.color.orangeColorPrimaryDark));
-//                windowOne.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            }
-        });
     }
 
     @Override
     public void initData() {
         fragments = new ArrayList<>();
-        fragment = new VideoFragment();
+        Fragment fragment = new VideoFragment();
         fragments.add(fragment);
 
-        replaceFragemnt();
-
+        showFragment(0);
 
 
     }
 
     /**
      * 切换 Fragment 显示
+     *
+     * @param index 显示第几个fragment
      */
-    private void replaceFragemnt() {
+    private void showFragment(int index) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (fragment.isAdded()) {
-            fragmentTransaction.show(fragment);
-        } else {
-            fragmentTransaction.replace(R.id.main_content, fragment);
+        if (fragment != null) {
+            oldFragment = fragment;
         }
+        fragment = fragments.get(index);
+        if (!fragment.isAdded()) {
+            fragmentTransaction.add(R.id.main_content, fragment);
+        }
+        if (oldFragment != null) {
+            fragmentTransaction.hide(oldFragment);
+        }
+        fragmentTransaction.show(fragment);
 //      现在就提交事物 ， 不需要在 Activity 被进程杀死的时候保存状态
         fragmentTransaction.commitNowAllowingStateLoss();
     }
@@ -130,34 +117,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_video:
                 fragment = fragments.get(0);
                 toolbar.setTitle(R.string.video);
-                toolbar.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.colorPrimary));
+                toolbar.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorPrimary));
 //                Window window = getWindow();
 //                window.setStatusBarColor(ContextCompat.getColor(mActivity,R.color.colorPrimaryDark));
 //                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 //                StatusBarUtil.setColor(this,ContextCompat.getColor(mActivity,R.color.colorPrimaryDark));
-                StatusBarUtil.setColorForDrawerLayout(this,drawerLayout,ContextCompat.getColor(mActivity,R.color.colorPrimary),23);
+                StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, ContextCompat.getColor(mActivity, R.color.colorPrimary), 23);
 
-                replaceFragemnt();
+                showFragment(0);
                 break;
             case R.id.nav_new:
-                if (fragments.size() == 2){
+                if (fragments.size() == 2) {
                     fragment = fragments.get(1);
-                }else {
+                } else {
                     fragment = new NewsFragment();
                     fragments.add(fragment);
                 }
                 toolbar.setTitle(R.string.zhihu_new);
-                toolbar.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.redColorPrimary));
+                toolbar.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.redColorPrimary));
 //                Window windowOne = getWindow();
 //                windowOne.setStatusBarColor(ContextCompat.getColor(mActivity,R.color.orangeColorPrimaryDark));
 //                windowOne.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //                windowOne.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 //                StatusBarUtil.setColor(this,ContextCompat.getColor(mActivity,R.color.orangeColorPrimary));
-                StatusBarUtil.setColorForDrawerLayout(this,drawerLayout, ContextCompat.getColor(mActivity,R.color.redColorPrimary),23);
+                StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, ContextCompat.getColor(mActivity, R.color.redColorPrimary), 23);
 
 
-                replaceFragemnt();
+                showFragment(1);
                 break;
             case R.id.nav_about:
                 break;

@@ -48,21 +48,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
-        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.1.0_a837e3f37872cc90622ab99c0870c436478f4de3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\y\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.2.3\7fe1a94c1aeb958acc876fe616922cc191f3222c\rxjava-1.2.3.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="7fe1a94c1aeb958acc876fe616922cc191f3222c">
         <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxjava-1.2.3_805acdaf1c4e91a031a0d31e5eae1d7d305473fb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.1.0_a837e3f37872cc90622ab99c0870c436478f4de3\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -75,15 +75,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
-        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.1.0_6ff5940e62c170629ea3726c90d900ec0a14601a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\y\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.5.0\4b0bb6bfbecbdd42b97ff400af342bfe7f32bc83\okhttp-3.5.0.jar"
         jumboMode="true"
         optimize="true"
@@ -93,12 +84,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.1.0_6ff5940e62c170629ea3726c90d900ec0a14601a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.1.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
         <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.1.0_30cad8ff02a3de1c07a13692fbce1a56b2740dc1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.mikhaellopez\circularimageview\3.0.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a8340f8c17337c864648c13abe1416d34c80ec14">
+        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.mikhaellopez-circularimageview-3.0.2_f58084ceec68e3e3070efa7954cfeb816a464a89\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -142,17 +151,8 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="5a18dc275e11ec0bbba076e02bb65aceaae18d8e">
+        sha1="330c9c38b9fa53635118e83f0959b4e9d1ed0635">
         <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_5d746b808dcf811b66bf1733fc191d7ee5adf382\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b266c8faa5af72e579b9da36ef35053ffed6ac64">
-        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.1.0_2580d457b3c1d7bbd686dc48bde58f44211325ea\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -165,6 +165,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b266c8faa5af72e579b9da36ef35053ffed6ac64">
+        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.1.0_2580d457b3c1d7bbd686dc48bde58f44211325ea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\BaiduYunDownload\SDK\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.0-alpha5\constraint-layout-solver-1.0.0-alpha5.jar"
         jumboMode="true"
         optimize="true"
@@ -174,21 +183,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\y\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.1.0\693eddc23e87ab13f9cf5001707ce8e7e1d1ff01\adapter-rxjava-2.1.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="693eddc23e87ab13f9cf5001707ce8e7e1d1ff01">
-        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\adapter-rxjava-2.1.0_8f118b49995232951643dfc39fa3f47b258c709a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\2.2.5\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="215abfa2b78865741d99f7b9c0afb79894986505">
         <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\jp.wasabeef-recyclerview-animators-2.2.5_f7477e9414d6ebe1daa2b05aab709022c9b88a27\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\y\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.1.0\693eddc23e87ab13f9cf5001707ce8e7e1d1ff01\adapter-rxjava-2.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="693eddc23e87ab13f9cf5001707ce8e7e1d1ff01">
+        <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\adapter-rxjava-2.1.0_8f118b49995232951643dfc39fa3f47b258c709a\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -268,7 +277,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="9a0fcef2e656ed2d623133caf4f7332cd8fd5c6f">
+        sha1="3946a79d1f4f5e1f860286e3cdacc4838999e12c">
         <dex dex="D:\workspace_gsd1304\BeautyPa\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_b82ed2a0dcc1c88e54a848060a75c8b3ecb30dcd\classes.dex" />
     </item>
     <item
