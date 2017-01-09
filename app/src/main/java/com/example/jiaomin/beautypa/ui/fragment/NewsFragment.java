@@ -21,6 +21,7 @@ import com.example.jiaomin.beautypa.app.BasePresenter;
 import com.example.jiaomin.beautypa.model.NewsEntity;
 import com.example.jiaomin.beautypa.model.StoriesEntity;
 import com.example.jiaomin.beautypa.presenter.NewsPresenter;
+import com.example.jiaomin.beautypa.utils.LogUtil;
 import com.example.jiaomin.beautypa.view.NewsView;
 import com.example.jiaomin.beautypa.view.TopViewPager;
 
@@ -53,7 +54,8 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
     private boolean isRefresh; // 是否是刷新
     private NewsAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
-    private NewsEntity newsEntity ;
+    private NewsEntity newsEntity;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
         ryView.setLayoutManager(mLayoutManager);
 
         // 设置下拉出现小圆圈是否是缩放出现，出现的位置，最大的下拉位置
-        swipeRefreshLayout.setProgressViewOffset(false, 50, 200);
+        swipeRefreshLayout.setProgressViewOffset(false, 20, 150);
         // 设定下拉圆圈的背景
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
         // 设置下拉圆圈上的颜色，绿色、蓝色、橙色、红色
@@ -96,6 +98,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefresh = true;
                 mvpPressenter.getNewsDatas();
             }
         });
@@ -107,11 +110,11 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
                 // recyclerView 滑动状态判断
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     // 当ReccylerView 停止滑动时 、 获得最后一个可见Item的 position
-                    final int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                    final int lastVisibleItemPosition = mLayoutManager.findLastCompletelyVisibleItemPosition();
 
-                    final int size = mDatas.size();
+                    final int size = mAdapter.getItemCount();
                     //判断是否是滑动到了最下面
-                    if (lastVisibleItemPosition == size - 1) {
+                    if (lastVisibleItemPosition == size - 1 && mAdapter.canLoadMore()) {
                         // 更新加载更多的状态
                         // 加载太快了看不出效果，这里用一个手动 runable 延时 1 秒再去加载数据
                         mAdapter.updateLoadMoreStatus(VideoListAdapter.STATUS_START_LOAD_MORE);
@@ -126,6 +129,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
 //                        mAdapter.updateLoadMoreStatus(VideoListAdapter.STATUS_START_LOAD_MORE);
 //                        getVideoList(String.valueOf(mDatas.get(size - 1).getId()));
                     }
+
 
                 }
             }
@@ -170,6 +174,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
                 swipeRefreshLayout.setRefreshing(false);
             }
             swipeRefreshLayout.setRefreshing(true);
+            isLoad = true;
             mvpPressenter.getNewsDatas();
         }
     }
@@ -193,6 +198,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
             initBanners(datas.getTop_stories());
         } else {
             if (isRefresh) {
+                isRefresh = false;
                 // 是下拉刷新
                 mDatas.clear();
                 mDatas.addAll(datas.getStories());
@@ -202,6 +208,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
                 // 上拉加载更多
                 int oldSize = mDatas.size();
                 mDatas.addAll(datas.getStories());
+                mAdapter.updateLoadMoreStatus(NewsAdapter.STATUS_STOP_LOAD_MORE);
                 mAdapter.notifyItemRangeInserted(oldSize + 1, mDatas.size() - oldSize);
             }
         }
@@ -226,6 +233,7 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
     @Override
     public void getNewsListFail(String msg) {
         toastShow(msg);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

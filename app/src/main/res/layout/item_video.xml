@@ -53,6 +53,11 @@
             android:layout_width="match_parent"
             android:layout_height="300dp">
 
+            <ImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_title"
@@ -67,13 +72,6 @@
                 android:text="Miss 倩"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/iv_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
-                android:scaleType="fitXY" />
         </FrameLayout>
 
         <LinearLayout

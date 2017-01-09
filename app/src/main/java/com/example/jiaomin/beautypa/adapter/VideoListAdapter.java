@@ -34,6 +34,7 @@ public class VideoListAdapter extends RecyclerView.Adapter {
 
     public static final int STATUS_START_LOAD_MORE = 1; // 加载更多开始
     public static final int STATUS_STOP_LOAD_MORE = 2; // 加载更多结束
+    private int currLoadMoreStatus;
 
     public VideoListAdapter(Context mContext, ArrayList<VideoEntity> mDatas) {
         this.mDatas = mDatas;
@@ -42,12 +43,13 @@ public class VideoListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mDatas.size() - 1) {
+        if (position < mDatas.size()) {
+            return ITEM_TYPE_CONTENT;
+        }else {
+            // position == mDatas.size()
             // 是最后一条数据了、应该显示的是上拉加载更多的Item
             return ITEM_TYPE_LOAD_MORE;
         }
-
-        return ITEM_TYPE_CONTENT;
     }
 
     @Override
@@ -72,26 +74,26 @@ public class VideoListAdapter extends RecyclerView.Adapter {
         int itemViewType = holder.getItemViewType();
         if (itemViewType == ITEM_TYPE_CONTENT) {
             // 正常布局的Item
-//            VideoEntity videoEntity = mDatas.get(position);
-//            ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
-//            ImageLoader.picassoWith(mContext, videoEntity.getAvatar(), contentViewHolder.ivHead);
-//            ImageLoader.picassoWith(mContext, videoEntity.getCover_pic(), contentViewHolder.ivCover);
-//            contentViewHolder.tvName.setText(videoEntity.getScreen_name());
-//            contentViewHolder.tvTitle.setText(videoEntity.getCaption());
-//            contentViewHolder.tvPlayNum.setText(videoEntity.getPlays_count() + "");
-//            contentViewHolder.tvLikeNum.setText(videoEntity.getLikes_count() + "");
-//            contentViewHolder.tvCommentNum.setText(videoEntity.getComments_count() + "");
+            VideoEntity videoEntity = mDatas.get(position);
+            ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
+            ImageLoader.picassoWith(mContext, videoEntity.getAvatar(), contentViewHolder.ivHead);
+            ImageLoader.picassoWith(mContext, videoEntity.getCover_pic(), contentViewHolder.ivCover);
+            contentViewHolder.tvName.setText(videoEntity.getScreen_name());
+            contentViewHolder.tvTitle.setText(videoEntity.getCaption());
+            contentViewHolder.tvPlayNum.setText(videoEntity.getPlays_count() + "");
+            contentViewHolder.tvLikeNum.setText(videoEntity.getLikes_count() + "");
+            contentViewHolder.tvCommentNum.setText(videoEntity.getComments_count() + "");
 
-//            final int p = position;
-//            contentViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    String url = mDatas.get(p).getUrl();
-//                    Intent intent = new Intent(mContext, WebViewActivity.class);
-//                    intent.putExtra(StaticData.URL,url);
-//                    mContext.startActivity(intent);
-//                }
-//            });
+            final int p = position;
+            contentViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = mDatas.get(p).getUrl();
+                    Intent intent = new Intent(mContext, WebViewActivity.class);
+                    intent.putExtra(StaticData.URL, url);
+                    mContext.startActivity(intent);
+                }
+            });
         } else if (itemViewType == ITEM_TYPE_LOAD_MORE) {
             // 上拉加载更多的 Item
         }
@@ -99,7 +101,7 @@ public class VideoListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return mDatas.size() + 1;
     }
 
     /**
@@ -109,6 +111,7 @@ public class VideoListAdapter extends RecyclerView.Adapter {
      */
     public void updateLoadMoreStatus(int loadMoreStatus) {
         if (loadMoreViewHolder != null) {
+            currLoadMoreStatus = loadMoreStatus;
             switch (loadMoreStatus) {
                 case STATUS_START_LOAD_MORE: // 加载更多开始、显示progressBar
                     loadMoreViewHolder.progressBar.setVisibility(View.VISIBLE);
@@ -123,6 +126,14 @@ public class VideoListAdapter extends RecyclerView.Adapter {
     }
 
     /**
+     * 是否可以上拉加载更多
+     * @return
+     */
+    public boolean canLoadMore() {
+        return currLoadMoreStatus != STATUS_START_LOAD_MORE;
+    }
+
+    /**
      * 显示正常内容的ViewHolder
      */
     private class ContentViewHolder extends RecyclerView.ViewHolder {
@@ -133,7 +144,8 @@ public class VideoListAdapter extends RecyclerView.Adapter {
         private TextView tvPlayNum; // 播放数
         private TextView tvLikeNum; // 点赞数
         private TextView tvCommentNum; // 评论数
-        private CardView cardView ;
+        private CardView cardView;
+
         public ContentViewHolder(View itemView) {
             super(itemView);
 

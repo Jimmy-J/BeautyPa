@@ -15,18 +15,18 @@ import rx.Observable;
 public interface ZhiHuApiStores {
     String API_SERVER_URL = "http://news-at.zhihu.com/api/4/";
 
+    // url： http://news-at.zhihu.com/api/4/news/latest
     // 获取列表数据
     @GET("news/latest")
-    // url： http://news-at.zhihu.com/api/4/news/latest
     Observable<NewsEntity> getLatestNews();
 
+    // url： http://news-at.zhihu.com/api/4/news/before/time
     // 上拉加载更多获取数据
     @GET("news/before/{time}")
-    // url： http://news-at.zhihu.com/api/4/news/before/9090
     Observable<NewsEntity> getBeforetNews(@Path("time") String time);
 
+    // url: http://news-at.zhihu.com/api/4/id
     @GET("news/{id}")
-        // url: http://news-at.zhihu.com/api/4/id
     Observable<NewsDetailsEntity> getDetailNews(@Path("id") String id);
 
 }

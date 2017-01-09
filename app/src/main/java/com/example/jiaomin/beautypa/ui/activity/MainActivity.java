@@ -35,10 +35,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawerLayout;
 
 
-    private Fragment fragment;
-
-    private List<Fragment> fragments;
-    private Fragment oldFragment; // 上一个显示的 Fragment
+    private NewsFragment mNewsFragment;
+    private VideoFragment mVideoFragment;
 
     @Override
     public int getContentLayoutId() {
@@ -63,11 +61,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
-        fragments = new ArrayList<>();
-        Fragment fragment = new VideoFragment();
-        fragments.add(fragment);
-
-        showFragment(0);
+        mVideoFragment = new VideoFragment();
+        showFragment(mVideoFragment, mNewsFragment, "video");
 
 
     }
@@ -75,24 +70,33 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * 切换 Fragment 显示
      *
-     * @param index 显示第几个fragment
+     * @param showFragment 要显示的Fragment
+     * @param hideFragment 要隐藏的Fragmnet
      */
-    private void showFragment(int index) {
+    private void showFragment(Fragment showFragment, Fragment hideFragment, String tag) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (fragment != null) {
-            oldFragment = fragment;
+
+        if (hideFragment != null && hideFragment.isVisible()) {
+            fragmentTransaction.hide(hideFragment);
         }
-        fragment = fragments.get(index);
-        if (!fragment.isAdded()) {
-            fragmentTransaction.add(R.id.main_content, fragment);
+
+        if (!showFragment.isAdded()) {
+            fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
+            return;
+        }else {
+            fragmentTransaction.show(showFragment).commit();
+            return;
         }
-        if (oldFragment != null) {
-            fragmentTransaction.hide(oldFragment);
-        }
-        fragmentTransaction.show(fragment);
+
+        // 必须先 show 在 hide ， 否则会有问题  ， 可以试着尝试一下 把下面这行代码移动89行
+//        fragmentTransaction.show(showFragment);
+
+
+        // -----  试着把show的代码移动到 我上面跑起来试试
 //      现在就提交事物 ， 不需要在 Activity 被进程杀死的时候保存状态
-        fragmentTransaction.commitNowAllowingStateLoss();
+//        fragmentTransaction.commitNowAllowingStateLoss();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -115,7 +119,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         item.setCheckable(true);
         switch (item.getItemId()) {
             case R.id.nav_video:
-                fragment = fragments.get(0);
                 toolbar.setTitle(R.string.video);
                 toolbar.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorPrimary));
 //                Window window = getWindow();
@@ -125,14 +128,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                StatusBarUtil.setColor(this,ContextCompat.getColor(mActivity,R.color.colorPrimaryDark));
                 StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, ContextCompat.getColor(mActivity, R.color.colorPrimary), 23);
 
-                showFragment(0);
+                Fragment videoFragment = getSupportFragmentManager().findFragmentByTag("video");
+                if (videoFragment == null) {
+                    mVideoFragment = new VideoFragment();
+                } else {
+                    mVideoFragment = (VideoFragment) videoFragment;
+                }
+
+                if (mVideoFragment == null) {
+                    mVideoFragment = new VideoFragment();
+                }
+                showFragment(mVideoFragment, mNewsFragment, "video");
                 break;
             case R.id.nav_new:
-                if (fragments.size() == 2) {
-                    fragment = fragments.get(1);
-                } else {
-                    fragment = new NewsFragment();
-                    fragments.add(fragment);
+                if (mNewsFragment == null) {
+                    Fragment newsFragment = getSupportFragmentManager().findFragmentByTag("news");
+                    if (newsFragment == null) {
+                        mNewsFragment = new NewsFragment();
+                    } else {
+                        mNewsFragment = (NewsFragment) newsFragment;
+                    }
                 }
                 toolbar.setTitle(R.string.zhihu_new);
                 toolbar.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.redColorPrimary));
@@ -144,7 +159,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, ContextCompat.getColor(mActivity, R.color.redColorPrimary), 23);
 
 
-                showFragment(1);
+                showFragment(mNewsFragment, mVideoFragment, "news");
                 break;
             case R.id.nav_about:
                 break;

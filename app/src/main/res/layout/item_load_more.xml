@@ -21,5 +21,6 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:visibility="gone"
         />
 </RelativeLayout>

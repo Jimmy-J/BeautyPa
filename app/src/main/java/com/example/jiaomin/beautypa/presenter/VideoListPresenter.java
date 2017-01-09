@@ -42,17 +42,17 @@ public class VideoListPresenter extends BasePresenter<VideoListView> {
         addSubscription(observable, new ApiCallback<ArrayList<VideoEntity>>() {
             @Override
             public void onSuccess(ArrayList<VideoEntity> model) {
-                mvpView.getVideoListSuccess(model);
+                    mvpView.getVideoListSuccess(model);
             }
 
             @Override
             public void onFailure(String msg) {
-                mvpView.getVideoListFail(msg);
+                    mvpView.getVideoListFail(msg);
             }
 
             @Override
             public void onFinish() {
-                mvpView.hideLoading();
+                    mvpView.hideLoading();
             }
         });
 

@@ -59,7 +59,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void onUnsubscribe() {
-        LogUtil.e("onUnsubscribe -------------- ");
+        LogUtil.e("onUns    ubscribe -------------- ");
 //      取消注册 以避免内存泄漏
         if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             mCompositeSubscription.unsubscribe();

@@ -21,36 +21,26 @@ public class NewsPresenter extends BasePresenter<NewsView> {
     public NewsPresenter(NewsView newsView) {
         attachView(newsView);
 
-        zhiHuApiStores = AppClient.getVideoRetrofit().create(ZhiHuApiStores.class);
+        zhiHuApiStores = AppClient.getZhiHuRetrofit().create(ZhiHuApiStores.class);
     }
 
     public void getNewsDatas() {
-        if (mvpView == null) {
-            return;
-        }
-
         mvpView.showLoading();
 
         addSubscription(zhiHuApiStores.getLatestNews(), new ApiCallback<NewsEntity>() {
             @Override
             public void onSuccess(NewsEntity model) {
-                if (mvpView != null) {
                     mvpView.getNewsListSuccess(model);
-                }
             }
 
             @Override
             public void onFailure(String msg) {
-                if (mvpView != null) {
                     mvpView.getNewsListFail(msg);
-                }
             }
 
             @Override
             public void onFinish() {
-                if (mvpView != null) {
                     mvpView.hideLoading();
-                }
             }
         });
 
@@ -66,23 +56,17 @@ public class NewsPresenter extends BasePresenter<NewsView> {
         addSubscription(zhiHuApiStores.getBeforetNews(date), new ApiCallback<NewsEntity>() {
             @Override
             public void onSuccess(NewsEntity model) {
-                if (mvpView != null) {
                     mvpView.getNewsListSuccess(model);
-                }
             }
 
             @Override
             public void onFailure(String msg) {
-                if (mvpView != null) {
                     mvpView.getNewsListFail(msg);
-                }
             }
 
             @Override
             public void onFinish() {
-                if (mvpView != null) {
                     mvpView.hideLoading();
-                }
             }
         });
 
