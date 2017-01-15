@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 
 import com.example.jiaomin.beautypa.R;
 import com.example.jiaomin.beautypa.adapter.VideoListAdapter;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
  * Created by MrJiaoMin@outlook.com on 2016/12/12.
@@ -43,7 +46,7 @@ public class VideoListFragment extends BaseMvpViewPagerFragment<VideoListPresent
             "63", "59", "27", "18", "6", "450", "460", "423"};
     private boolean isLoad; // 是否已经加载过数据了，用于实现数据只加载一次
     private int page = 1; // 当前的页数
-    private int count = 10; // 每一页加载的数据
+    private int count = 20; // 每一页加载的数据
 
     private VideoListAdapter mAdapter;
     private ArrayList<VideoEntity> mDatas;

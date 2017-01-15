@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.example.jiaomin.beautypa.R;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 /**
  * Created by MrJiaoMin@outlook.com on 2016/12/12.
@@ -193,7 +196,10 @@ public class NewsFragment extends BaseMvpFragment<NewsPresenter> implements News
         if (mDatas == null) {
             mDatas = datas.getStories();
             mAdapter = new NewsAdapter(mActivity, mDatas);
-            ryView.setAdapter(mAdapter);
+            SlideInLeftAnimationAdapter adapter = new SlideInLeftAnimationAdapter(mAdapter);
+            adapter.setDuration(300);
+            adapter.setInterpolator(new OvershootInterpolator());
+            ryView.setAdapter(adapter);
             isLoad = true;
             initBanners(datas.getTop_stories());
         } else {

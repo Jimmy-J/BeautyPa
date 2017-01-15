@@ -109,4 +109,22 @@ public class WebViewActivity extends BaseActivity {
         setting.setUseWideViewPort(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
+    }
 }
